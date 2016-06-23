@@ -1,0 +1,16 @@
+{
+  "name": "Movies",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "ios": "react-native run-ios",
+    "android": "react-native run-android",
+    "menu": "adb shell input keyevent 82",
+    "emul": "emulator -avd react-native &"
+  },
+  "dependencies": {
+    "react": "15.1.0",
+    "react-native": "0.28.0"
+  }
+}
