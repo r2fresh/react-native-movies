@@ -3,7 +3,7 @@ import {
   View,
   ListView,
   Text,
-  ActivityIndicatorIOS
+  ActivityIndicator
 } from 'react-native';
 
 import MovieCell from './MovieCell';
@@ -73,7 +73,7 @@ export default class SearchScreen extends React.Component {
       // 로딩 화면
       //
       return (
-        <ActivityIndicatorIOS
+        <ActivityIndicator
           style={{flex:1}}
           animating={true}
           size='large'
