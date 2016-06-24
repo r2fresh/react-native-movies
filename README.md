@@ -30,6 +30,6 @@ npm run android
 ```
 npm run ios - 아이폰 개발환경 실행
 npm run android - 안드로이드 개발환경 실행
-npm run emul - 안드로이드 에뮬레티어 실행
+npm run emul - 안드로이드 에뮬레이터 실행
 npm run menu - 안드로이드 에뮬레이터 메뉴 버튼 실행
 ```
