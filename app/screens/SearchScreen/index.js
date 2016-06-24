@@ -61,7 +61,7 @@ export default class SearchScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flex:1, marginTop:70}}>
+      <View style={{flex:1}}>
         {this.renderContent()}
       </View>
     );
