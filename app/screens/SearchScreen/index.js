@@ -34,8 +34,19 @@ export default class SearchScreen extends React.Component {
     this.searchMovies('');
   }
 
+  _urlForQueryAndPage(query, pageNo) {
+    const limit = 20;
+
+    let url = (
+      `${API_INFO.url}/lists/movies/in_theaters.json` +
+      `?apiKey=${API_INFO.key}&page_limit=${limit}&page=${pageNo}`
+    );
+
+    return url;
+  }
+
   searchMovies(query) {
-    const url = utils.urlForQueryAndPage(query, 1);
+    const url = this._urlForQueryAndPage(query, 1);
 
     this.setState({
       isLoading: true
@@ -54,8 +65,9 @@ export default class SearchScreen extends React.Component {
 
   selectMovie(movie) {
     this.props.navigator.push({
+      name: 'MovieScreen',
       title: '영화',
-      component: MovieScreen
+      movie
     });
   }
 
@@ -103,16 +115,3 @@ export default class SearchScreen extends React.Component {
     );
   }
 }
-
-const utils = {
-  urlForQueryAndPage(query, pageNo) {
-    const limit = 20;
-
-    let url = (
-      `${API_INFO.url}/lists/movies/in_theaters.json` +
-      `?apiKey=${API_INFO.key}&page_limit=${limit}&page=${pageNo}`
-    );
-
-    return url;
-  }
-};

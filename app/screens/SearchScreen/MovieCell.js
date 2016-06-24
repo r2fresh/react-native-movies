@@ -38,7 +38,7 @@ MovieCell.propTypes = {
   onSelect: React.PropTypes.func.isRequired
 };
 
-function getImageSource(movie, kind) {
+function getImageSource(movie) {
   let uri = movie && movie.posters ? movie.posters.thumbnail : null;
   return { uri };
 }

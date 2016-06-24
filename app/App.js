@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import SearchScreen from './screens/SearchScreen';
+import MovieScreen from './screens/MovieScreen';
 
 export default class App extends React.Component {
   renderScene(route, navigator) {
@@ -27,9 +28,17 @@ export default class App extends React.Component {
       case "SearchScreen":
         return (
           <View style={containerStyle}>
-            <SearchScreen navigator={navigator} />
+            <SearchScreen navigator={navigator} route={route} />
           </View>
         );
+
+      case "MovieScreen":
+        return (
+          <View style={containerStyle}>
+            <MovieScreen navigator={navigator} route={route} />
+          </View>
+        );
+
       default:
         return <NotFound />;
     }
@@ -75,10 +84,12 @@ const routeMapper = {
     const prevRoute = navState.routeStack[index-1];
     if (!prevRoute) return;
 
-    const buttonText = ` < ${prevRoute.title}`;
+    const buttonText = ` < ${prevRoute.title} `;
 
     return (
-      <TouchableHighlight onPress={() => navigator.pop()}>
+      <TouchableHighlight
+        underlayColor="#CFCFCF"
+        onPress={() => navigator.pop()}>
         <Text>{buttonText}</Text>
       </TouchableHighlight>
     );
