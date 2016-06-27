@@ -149,6 +149,7 @@ export default class SearchScreen extends React.Component {
           renderSeparator={this.renderSeparator.bind(this)}
           renderFooter={this.renderFooter.bind(this)}
           showsVerticalScrollIndicator={false}
+          keyboardDismissMode='on-drag'
         />
       );
     }

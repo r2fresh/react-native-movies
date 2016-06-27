@@ -4,14 +4,26 @@ import {
   View,
   Text,
   TouchableHighlight,
-  Platform
+  Platform,
+  BackAndroid
 } from 'react-native';
 
 import SearchScreen from './screens/SearchScreen';
 import MovieScreen from './screens/MovieScreen';
 
+let _navigator;
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+    _navigator.pop();
+    return true;
+  }
+  return false;
+});
+
 export default class App extends React.Component {
   renderScene(route, navigator) {
+    _navigator = navigator;
+
     const containerStyle = {
       flex:1,
       ...Platform.select({
