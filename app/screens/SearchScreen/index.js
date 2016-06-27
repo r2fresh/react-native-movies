@@ -7,6 +7,7 @@ import {
   RefreshControl
 } from 'react-native';
 
+import SearchBar from './SearchBar';
 import MovieCell from './MovieCell';
 import MovieScreen from '../MovieScreen';
 
@@ -28,7 +29,8 @@ export default class SearchScreen extends React.Component {
     this.movieData = {
       total: 0,
       pageNo: 1,
-      data: []
+      data: [],
+      query: ''
     };
 
     this.state = {
@@ -42,20 +44,21 @@ export default class SearchScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.searchMovies(SEARCH_STATE.INIT);
+    this.searchMovies(SEARCH_STATE.INIT, this.movieData.query);
   }
 
   _urlForQueryAndPage(query, limit, pageNo) {
+    query = encodeURIComponent(query);
 
     let url = (
       `${API_INFO.url}/lists/movies/in_theaters.json` +
-      `?apiKey=${API_INFO.key}&page_limit=${limit}&page=${pageNo}`
+      `?apiKey=${API_INFO.key}&q=${query}&page_limit=${limit}&page=${pageNo}`
     );
 
     return url;
   }
 
-  searchMovies(state) {
+  searchMovies(state, query) {
     const limit = 10;
 
     switch (state) {
@@ -78,7 +81,7 @@ export default class SearchScreen extends React.Component {
       isLoadingTail: state === SEARCH_STATE.NEXT
     });
 
-    const url = this._urlForQueryAndPage('', limit, this.movieData.pageNo);
+    const url = this._urlForQueryAndPage(query, limit, this.movieData.pageNo);
 
     fetch(url)
       .then(response => response.json())
@@ -97,7 +100,7 @@ export default class SearchScreen extends React.Component {
   }
 
   onEndReached() {
-    this.searchMovies(SEARCH_STATE.NEXT);
+    this.searchMovies(SEARCH_STATE.NEXT, this.movieData.query);
   }
 
   selectMovie(movie) {
@@ -111,6 +114,9 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <View style={{flex:1}}>
+        <SearchBar
+          onSearchChange={this.onSearchChange.bind(this)}
+        />
         {this.renderContent()}
       </View>
     );
@@ -148,12 +154,22 @@ export default class SearchScreen extends React.Component {
     }
   }
 
+  onSearchChange(e) {
+    this.movieData.query = e.nativeEvent.text.toLowerCase();
+
+    clearTimeout(this.timeoutID);
+
+    this.timeoutID = setTimeout(() => {
+      this.searchMovies(SEARCH_STATE.INIT, this.movieData.query);
+    }, 300);
+  }
+
   refreshControl() {
     return (
       <RefreshControl
         refreshing={this.state.isLoadingHead}
         onRefresh={() => {
-          this.searchMovies(SEARCH_STATE.REFRESH);
+          this.searchMovies(SEARCH_STATE.REFRESH, this.movieData.query);
         }}
       />
     );
