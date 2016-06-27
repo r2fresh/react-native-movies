@@ -16,7 +16,7 @@ export default class App extends React.Component {
       flex:1,
       ...Platform.select({
         ios:{
-          paddingTop: 40
+          paddingTop: 60
         },
         android: {
           paddingTop: 0
@@ -84,13 +84,15 @@ const routeMapper = {
     const prevRoute = navState.routeStack[index-1];
     if (!prevRoute) return;
 
-    const buttonText = ` < ${prevRoute.title} `;
+    const buttonText = `  < ${prevRoute.title} `;
 
     return (
-      <TouchableHighlight
-        underlayColor="#CFCFCF"
+      <TouchableHighlight style={{marginVertical: 10}}
+        underlayColor="white"
         onPress={() => navigator.pop()}>
-        <Text>{buttonText}</Text>
+        <Text style={{fontSize: 20}}>
+          {buttonText}
+        </Text>
       </TouchableHighlight>
     );
   },
@@ -100,7 +102,13 @@ const routeMapper = {
 
   Title(route, navigator, index, navState) {
     return (
-      <Text>{route.title}</Text>
+      <Text style={{
+        fontSize: 20,
+        fontWeight:'bold',
+        marginVertical: 10
+      }}>
+        {route.title}
+      </Text>
     );
   }
 };
